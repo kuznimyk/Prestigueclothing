@@ -1,0 +1,38 @@
+{% extends 'main/base.html' %}
+{% block title %}{{ item.name }}{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="image-container">
+          <img class="item-image img-fluid" src="{{ item.image.url }}" alt="Item Image">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="item-details text-dark">
+          <h1 class="display-4 fw-bold mb-4">{{ item.name }}</h1>
+          <p class="lead mb-3"><b>Seller:</b> {{ item.seller }}</p>
+          <p class="lead mb-3"><b>Category:</b> {{ item.category }}</p>
+          <p class="lead mb-3"><b>Sizes:</b> {{ item.sizes }}</p>
+          <p class="lead mb-3"><b>Price:</b> ${{ item.price }}</p>
+          <p class="lead mb-3"><b>Description:</b> {{ item.description }}</p>
+
+          <!-- Buttons for editing and deleting -->
+          {%if item.seller == user%}
+          <div class="mt-4">
+            <a href="{%url 'main:edititem' item.id %}" class="btn btn-dark">Edit Item</a>
+            <a href="{%url 'main:deleteitem' item.id%}" class="btn btn-secondary">Delete Item</a>
+          </div>
+          {%else%}
+          <div class = 'mt-4'>
+            <a href="{%url 'main:addtocart' item.id%}" class = 'btn btn-dark'>Add to cart</a>
+          </div>
+          {%endif%}
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

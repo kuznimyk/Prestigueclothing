@@ -15,7 +15,8 @@ class Item(models.Model):
     price = models.FloatField()
     image = models.ImageField(null = True, blank  = True, upload_to = 'images/')
     description = models.CharField(max_length=255, default='Default Description')
-
+    quantity = models.IntegerField(default = 1)
+    in_stock = models.BooleanField(default = True)
 
     def __str__(self):  
         return self.name

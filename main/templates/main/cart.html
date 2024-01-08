@@ -3,6 +3,8 @@
 {% block content %}
 
 <style>
+  /* Your existing styles remain unchanged */
+
   .item-name {
     font-size: 1.2rem;
     font-weight: bold;
@@ -45,8 +47,15 @@
           <p class="stock-status text-danger">Out of Stock</p>
         {% endif %}
       </div>
-      <div class="col-md-4">
+      <div class="col-md-2">
         <p class="price">$ {{ item.price }}</p>
+      </div>
+      <div class="col-md-2 text-right">
+        <!-- "Remove" button in the same column as the price -->
+        <form method="post" action="{% url 'main:removefromcart' item.id %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger bg-danger">Remove</button>
+        </form>
       </div>
     </div>
     <hr>

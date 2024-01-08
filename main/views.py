@@ -142,6 +142,13 @@ def addtocart(request, pk):
     print(request.session['cartids'])
     return redirect('main:viewcart')
 
+def removefromcart(request, pk):
+    cart_ids = request.session.get('cartids', [])
+    cart_ids.remove(pk)
+    request.session['cartids'] = cart_ids
+    request.session.modified = True
+
+    return redirect('main:viewcart')
 
 def about(request):
     return render(request, 'main/about.html')

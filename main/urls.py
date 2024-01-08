@@ -13,6 +13,7 @@ urlpatterns = [
     path('<int:pk>/edititem', views.edititem, name = 'edititem'),
     path('<int:pk>/deleteitem', views.deleteitem, name = 'deleteitem'),
     path('addtocart/<int:pk>/', views.addtocart, name = 'addtocart'),
+    path('removefromcart/<int:pk>', views.removefromcart, name = 'removefromcart'),
     path('viewcart', views.viewcart, name = 'viewcart'),
     path('logout/', views.logout_view, name = 'logout'),
     path('about/', views.about, name = 'about'),

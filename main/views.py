@@ -142,6 +142,16 @@ def addtocart(request, pk):
     print(request.session['cartids'])
     return redirect('main:viewcart')
 
+
+def about(request):
+    return render(request, 'main/about.html')
+
+def contact(request):
+    return render(request, 'main/contact.html')
+
+def investors(request):
+    return render(request, 'main/investors.html')
+
 class ItemListView(ListView):
     model = Item
     template_name = 'main/index.html'
@@ -149,3 +159,4 @@ class ItemListView(ListView):
     paginate_by = 3
     def get_queryset(self):
         return Item.objects.all()
+

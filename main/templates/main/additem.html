@@ -1,0 +1,14 @@
+{%extends 'main/base.html'%}
+{%block title%}Add new item{%endblock%}
+{%load crispy_forms_tags%}
+{%block content%}
+<form method = "POST" enctype="multipart/form-data">
+    {%csrf_token%}
+    {%if not item%}
+    {{form|crispy}}
+    {%else%}
+
+    {%endif%}
+    <button type = 'submit' class = 'btn btn-success bg-dark'>Add item</button>
+</form>
+{%endblock%}

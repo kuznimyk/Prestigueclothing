@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from item.models import Item, Category
-from .forms import RegisterForm, ItemForm, EditItemForm
+from .forms import RegisterForm, ItemForm, EditItemForm,LoginForm
 from django.contrib.auth import login,logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView
 from django.core.paginator import Paginator
 from django.contrib import messages
+from .models import CustomUser
 
 # Create your views here.
 def index(request):
@@ -14,21 +15,47 @@ def index(request):
     return render(request, 'main/index.html', {
         'items':items,
     })
+def login_view(request):
+    form = LoginForm()
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+
+            user = authenticate(request,email = email, password = password)
+
+            if user is not None:
+                login(request,user)
+                return redirect('main:index')
+            else:
+                messages.error(request, 'Invalid email or password.')
+
+
+
+    return render(request, 'registration/login.html', {
+        'form':form
+    })
 
 
 def signup(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            user = CustomUser.objects.create_user(form.cleaned_data['email'], form.cleaned_data['password'])
             login(request,user)
-            return redirect('main:index')
+            
+            return redirect("main:index")
     else:
         form = RegisterForm()
     
     return render(request, 'registration/signup.html', {
         'form':form
     })
+@login_required
+def logout_view(request):
+    logout(request)
+    return redirect("main:index")
 
 @login_required
 def profile(request):
@@ -37,6 +64,7 @@ def profile(request):
         'user': request.user,
         'items':items,
     })
+
 
 @login_required
 def additem(request):

@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from main.models import CustomUser
 class Category(models.Model):
     name = models.CharField( max_length=50)
     def __str__(self):
@@ -8,7 +8,7 @@ class Category(models.Model):
     
 # Create your models here.
 class Item(models.Model):
-    seller = models.ForeignKey(User,on_delete=models.CASCADE,default=1)
+    seller = models.ForeignKey(CustomUser,on_delete=models.CASCADE,default=1)
     category = models.ForeignKey(Category,related_name = 'items', on_delete=models.CASCADE)
     name = models.CharField(max_length = 255)
     sizes = models.CharField(max_length = 255)

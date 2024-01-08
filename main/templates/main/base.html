@@ -18,7 +18,7 @@
         <div>
             <a href="{%url 'main:viewcart'%}">My cart</a>
             {%if user.is_authenticated %}
-            <span class = 'navbar-text text-white-50 mb-3'><a href="{%url 'main:profile'%}">{{user.username}}</a></span>
+            <span class = 'navbar-text text-white-50 mb-3'><a href="{%url 'main:profile'%}">Your profile</a></span>
 
                 <a class = 'nav-link text-light mt-3' href = '/logout'>Logout</a>
             {%else%}

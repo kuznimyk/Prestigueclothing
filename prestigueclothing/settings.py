@@ -31,6 +31,8 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 # Application definition
 
+AUTH_USER_MODEL = 'main.CustomUser'
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

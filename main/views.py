@@ -7,6 +7,10 @@ from django.views.generic import ListView
 from django.core.paginator import Paginator
 from django.contrib import messages
 from .models import CustomUser
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+
+
 
 # Create your views here.
 def index(request):
@@ -37,6 +41,20 @@ def login_view(request):
         'form':form
     })
 
+@login_required
+def change_password(request):
+    if request.method == "POST":
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            return redirect('main:index')
+    else:
+        form = PasswordChangeForm(request.user)
+        
+    return render(request, 'main/changepassword.html', {
+        'form': form
+    })
 
 def signup(request):
     if request.method == 'POST':

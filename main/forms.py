@@ -29,10 +29,3 @@ class LoginForm(forms.Form):
     class Meta:
         model = CustomUser
         fields = ('email', 'password')
-    
-
-class ChangePasswordForm(forms.ModelForm):
-    prevpass = forms.CharField(widget = forms.PasswordInput)
-    newpass = forms.CharField(widget = forms.PasswordInput)
-    confirmpass = forms.CharField(widget=forms.PasswordInput)
-    

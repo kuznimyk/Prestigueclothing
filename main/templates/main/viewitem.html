@@ -18,6 +18,7 @@
           <p class="lead mb-3"><b>Sizes:</b> {{ item.sizes }}</p>
           <p class="lead mb-3"><b>Price:</b> ${{ item.price }}</p>
           <p class="lead mb-3"><b>Description:</b> {{ item.description }}</p>
+          <p class="lead mb-3"><b>In stock:</b> {{ item.in_stock }}</p>
 
           <!-- Buttons for editing and deleting -->
           {%if item.seller == user%}

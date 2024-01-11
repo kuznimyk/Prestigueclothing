@@ -11,7 +11,12 @@
 
     <!-- Header -->
     <nav class='py-10 px-6 flex justify-between items-center bg-black text-white'>
-        <a href="/" class='text-4xl font-semibold'><i>R i f t</i></a>
+        <div>
+            <a href="{%url 'main:menswear'%}">Menswear</a>
+            <a href="{%url 'main:womenswear'%}">Womenswear</a>
+            <a href="{%url 'main:everything'%}">Everythig</a>
+
+        </div>
         <form action="#" method="get" class="flex justify-between items-center">
             <input type="text" name="query" class="w-full py-2 px-9 border rounded-xl" value="{{ query }}" placeholder="Find an item">
             <button type='submit' class="ml-5">Search</button>
@@ -29,27 +34,15 @@
     </nav>
 
     <!-- Main Content with Sidebars -->
-    <div class="flex-1 flex">
-
-        <!-- Left Sidebar -->
-        <div class="w-1/6 bg-gray-800 text-white py-10 px-4">
-            <!-- Content for the left sidebar goes here -->
-            Left Sidebar
-        </div>
-
         <!-- Main Content Area -->
-        <div class="flex-1 px-6 py-6">
-            <!-- Added container div -->
-            {% block content %}
-            {% endblock %}
-        </div>
+    <div class="flex-1 px-6 py-6">
+        <!-- Added container div -->
+        {% block content %}
+        {% endblock %}
+    </div>
 
         <!-- Right Sidebar -->
-        <div class="w-1/6 bg-gray-800 text-white py-10 px-4">
-            <!-- Content for the right sidebar goes here -->
-            Right Sidebar
-        </div>
-    </div>
+
 
     <!-- Footer -->
     <footer class='py-6 px-6 flex justify-between bg-black text-white'>

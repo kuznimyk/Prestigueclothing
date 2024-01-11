@@ -7,6 +7,7 @@ class Category(models.Model):
         return self.name
     
 in_stock_choices = [('YES', 'Yes'), ('NO', 'No'),]
+gender_choices = [('Men', 'Men'), ('Women', 'Women'), ('Unisex', 'Unisex')]
 # Create your models here.
 class Item(models.Model):
     seller = models.ForeignKey(CustomUser,on_delete=models.CASCADE,default=1)
@@ -18,6 +19,7 @@ class Item(models.Model):
     description = models.CharField(max_length=255, default='Default Description')
     quantity = models.IntegerField(default = 1)
     in_stock = models.CharField(choices = in_stock_choices,default = 'YES')
+    gender = models.CharField(choices = gender_choices, default = 'Unisex' )
 
     def __str__(self):  
         return self.name

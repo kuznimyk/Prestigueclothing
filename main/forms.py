@@ -16,13 +16,13 @@ class RegisterForm(forms.ModelForm):
 class ItemForm(forms.ModelForm):
     class Meta:
         model = Item
-        fields = ( 'category', 'name', 'sizes', 'price', 'description', 'image','quantity', 'in_stock')
+        fields = ( 'category', 'name', 'sizes', 'price', 'description', 'image','quantity', 'in_stock', 'gender')
 
 
 class EditItemForm(forms.ModelForm):
     class Meta:
         model = Item
-        fields = ( 'category', 'name', 'sizes', 'price', 'description', 'image', 'quantity', 'in_stock')
+        fields = ( 'category', 'name', 'sizes', 'price', 'description', 'image', 'quantity', 'in_stock', 'gender')
 
 class LoginForm(forms.Form):
     email = forms.EmailField()

@@ -9,7 +9,8 @@ from django.contrib import messages
 from .models import CustomUser
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
-
+from itertools import chain
+from django.db.models import Q
 
 
 # Create your views here.
@@ -83,7 +84,7 @@ def profile(request):
         'items':items,
     })
 
-
+#working with items 
 @login_required
 def additem(request):
     if request.method == "POST":
@@ -125,6 +126,8 @@ def deleteitem(request, pk):
 
     return redirect('main:index')
 
+
+#working with cart
 def viewcart(request):
     cart_item_ids = request.session.get('cartids', [])
     if cart_item_ids:
@@ -167,6 +170,25 @@ def removefromcart(request, pk):
     request.session.modified = True
 
     return redirect('main:viewcart')
+
+#working with navigation
+def menswear(request):
+    items = Item.objects.filter(Q(gender = 'Men') | Q(gender = 'Unisex'))
+    return render(request, 'main/menswear.html',{
+        'items':items
+    })
+
+def womenswear(request):
+    items = Item.objects.filter(Q(gender = 'Women')| Q(gender = 'Unisex'))
+    return render(request, 'main/womenswear.html', {
+        'items':items
+    })
+
+def everything(request):
+    items = Item.objects.all()
+    return render(request, 'main/everything.html',{
+        'items':items
+    })
 
 def about(request):
     return render(request, 'main/about.html')

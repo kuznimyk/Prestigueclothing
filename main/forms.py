@@ -16,12 +16,13 @@ class RegisterForm(forms.ModelForm):
 class ItemForm(forms.ModelForm):
     class Meta:
         model = Item
-        fields = ( 'category', 'name', 'sizes', 'price', 'description', 'image')
+        fields = ( 'category', 'name', 'sizes', 'price', 'description', 'image','quantity', 'in_stock', 'gender')
+
 
 class EditItemForm(forms.ModelForm):
     class Meta:
         model = Item
-        fields = ( 'category', 'name', 'sizes', 'price', 'description', 'image')
+        fields = ( 'category', 'name', 'sizes', 'price', 'description', 'image', 'quantity', 'in_stock', 'gender')
 
 class LoginForm(forms.Form):
     email = forms.EmailField()
@@ -29,10 +30,3 @@ class LoginForm(forms.Form):
     class Meta:
         model = CustomUser
         fields = ('email', 'password')
-    
-
-class ChangePasswordForm(forms.ModelForm):
-    prevpass = forms.CharField(widget = forms.PasswordInput)
-    newpass = forms.CharField(widget = forms.PasswordInput)
-    confirmpass = forms.CharField(widget=forms.PasswordInput)
-    

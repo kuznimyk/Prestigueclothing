@@ -1,0 +1,48 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Everything{% endblock %}
+
+{% block content %}
+<div class='grid grid-cols-3 gap-4 my-5 custom-grid'>
+    {% for item in items %}
+    <div class="w-65 border border-2 rounded-xl custom-item">
+        <a href="{% url 'main:viewitem' item.id %}" class="text-decoration-none">
+            <div>
+                {% if item.image %}
+                <img src="{{ item.image.url }}" class="img-fluid rounded-top" alt="{{ item.name }}">
+                {% else %}
+                <!-- Handle case where 'image' field is empty -->
+                <p>No image available</p>
+                {% endif %}
+            </div>
+            <div class="p-3 bg-white rounded-bottom text-center">
+                <h2 class="h5">{{ item.name }}</h2>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="d-flex justify-content-center">
+    {% if page_obj.has_other_pages %}
+        {% if page_obj.has_previous %}
+            <a class='btn btn-light mb-4 text-dark' href="?page=1">First</a>
+            <a class='btn btn-light mb-4 text-dark' href="?page={{ items.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <a class='btn btn-dark mb-4 text-light ' href="?page={{ num }}">{{ num }}</a>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a class='btn btn-light mb-4 text-dark' href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <a class='btn btn-light mb-4 text-dark' href="?page={{ page_obj.next_page_number }}">Next</a>
+            <a class='btn btn-light mb-4 text-dark' href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+        {% endif %}
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -7,6 +7,11 @@ from django.views.generic import ListView
 from django.core.paginator import Paginator
 from django.contrib import messages
 from .models import CustomUser
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+from itertools import chain
+from django.db.models import Q
+
 
 # Create your views here.
 def index(request):
@@ -37,6 +42,20 @@ def login_view(request):
         'form':form
     })
 
+@login_required
+def change_password(request):
+    if request.method == "POST":
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            return redirect('main:index')
+    else:
+        form = PasswordChangeForm(request.user)
+        
+    return render(request, 'main/changepassword.html', {
+        'form': form
+    })
 
 def signup(request):
     if request.method == 'POST':
@@ -65,7 +84,7 @@ def profile(request):
         'items':items,
     })
 
-
+#working with items 
 @login_required
 def additem(request):
     if request.method == "POST":
@@ -107,6 +126,8 @@ def deleteitem(request, pk):
 
     return redirect('main:index')
 
+
+#working with cart
 def viewcart(request):
     cart_item_ids = request.session.get('cartids', [])
     if cart_item_ids:
@@ -142,6 +163,42 @@ def addtocart(request, pk):
     print(request.session['cartids'])
     return redirect('main:viewcart')
 
+def removefromcart(request, pk):
+    cart_ids = request.session.get('cartids', [])
+    cart_ids.remove(pk)
+    request.session['cartids'] = cart_ids
+    request.session.modified = True
+
+    return redirect('main:viewcart')
+
+#working with navigation
+def menswear(request):
+    items = Item.objects.filter(Q(gender = 'Men') | Q(gender = 'Unisex'))
+    return render(request, 'main/menswear.html',{
+        'items':items
+    })
+
+def womenswear(request):
+    items = Item.objects.filter(Q(gender = 'Women')| Q(gender = 'Unisex'))
+    return render(request, 'main/womenswear.html', {
+        'items':items
+    })
+
+def everything(request):
+    items = Item.objects.all()
+    return render(request, 'main/everything.html',{
+        'items':items
+    })
+
+def about(request):
+    return render(request, 'main/about.html')
+
+def contact(request):
+    return render(request, 'main/contact.html')
+
+def investors(request):
+    return render(request, 'main/investors.html')
+
 class ItemListView(ListView):
     model = Item
     template_name = 'main/index.html'
@@ -149,3 +206,4 @@ class ItemListView(ListView):
     paginate_by = 3
     def get_queryset(self):
         return Item.objects.all()
+

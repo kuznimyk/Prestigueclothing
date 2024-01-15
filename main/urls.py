@@ -13,6 +13,14 @@ urlpatterns = [
     path('<int:pk>/edititem', views.edititem, name = 'edititem'),
     path('<int:pk>/deleteitem', views.deleteitem, name = 'deleteitem'),
     path('addtocart/<int:pk>/', views.addtocart, name = 'addtocart'),
+    path('removefromcart/<int:pk>', views.removefromcart, name = 'removefromcart'),
     path('viewcart', views.viewcart, name = 'viewcart'),
-    path('logout/', views.logout_view, name = 'logout')
+    path('logout/', views.logout_view, name = 'logout'),
+    path('about/', views.about, name = 'about'),    
+    path('contact/', views.contact, name = 'contact'),
+    path('investors', views.investors, name = 'investors'),
+    path('changepassword', views.change_password, name = 'changepassword'),
+    path('menswear/', views.menswear, name = 'menswear'),
+    path('womenswear/', views.womenswear, name = 'womenswear'),
+    path('everything', views.everything, name = 'everything')
 ]
